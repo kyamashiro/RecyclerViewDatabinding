@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -22,7 +23,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    // kapt
+    dataBinding {
+        enabled true
+    }
 }
 
 dependencies {
@@ -36,4 +40,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // kapt dependencies
+    kapt "com.sun.xml.bind:jaxb-core:2.3.0.1"
+    kapt "javax.xml.bind:jaxb-api:2.3.1"
+    kapt "com.sun.xml.bind:jaxb-impl:2.3.2"
+    annotationProcessor "com.sun.xml.bind:jaxb-core:2.3.0.1"
+    annotationProcessor "javax.xml.bind:jaxb-api:2.3.1"
 }
