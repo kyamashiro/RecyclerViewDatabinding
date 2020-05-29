@@ -1,17 +1,14 @@
 package com.example.recyclerviewdatabinding.ui.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclerviewdatabinding.R
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(R.layout.main_fragment) {
 
     companion object {
         private val TAG = "MainFragment"
@@ -21,16 +18,9 @@ class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val rootView = inflater.inflate(
-            R.layout.main_fragment,
-            container, false
-        ).apply { tag = TAG }
-
-        recyclerView = rootView.findViewById(R.id.recycler_view)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        recyclerView = view.rootView.findViewById(R.id.recycler_view)
         recyclerView.also {
             // RecyclerViewにレイアウトをセットする
             it.layoutManager = LinearLayoutManager(activity)
@@ -44,8 +34,6 @@ class MainFragment : Fragment() {
             DividerItemDecoration.VERTICAL
         )
         recyclerView.addItemDecoration(itemDecoration)
-
-        return rootView
     }
 
     // RecyclerViewで表示するデータの作成
