@@ -27,7 +27,7 @@ class RecyclerViewAdapter(private val dataSet: List<MainViewModel>, private val 
         // リストの行にデータをセットする
         viewHolder.bind(dataSet.get(position))
 
-        // 個別のアイエムをクリックしたときの挙動はViewHolderに書くべきなのか？
+        // 個別のアイテムをクリックしたときの挙動はViewHolderに書くべきなのか？
         // ViewHolderの役割とは？
         viewHolder.binding.button.setOnClickListener {
             Toast.makeText(viewHolder.itemView.context, "Element $position button pushed.", Toast.LENGTH_SHORT).show()
@@ -40,7 +40,6 @@ class RecyclerViewAdapter(private val dataSet: List<MainViewModel>, private val 
     companion object {
         private val TAG = "RecyclerViewAdapter"
     }
-
 
     /**
      * カスタムviewHolder

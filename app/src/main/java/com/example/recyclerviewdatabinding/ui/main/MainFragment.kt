@@ -1,13 +1,17 @@
 package com.example.recyclerviewdatabinding.ui.main
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.recyclerviewdatabinding.R
+import com.example.recyclerviewdatabinding.databinding.MainFragmentBinding
 
+// Fragmentのコンストラクタにレイアウトを渡すとonCreateViewを書かなくても自動でinfateしてくれる
 class MainFragment : Fragment(R.layout.main_fragment) {
 
     companion object {
@@ -16,12 +20,28 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     }
 
     private lateinit var viewModel: MainViewModel
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var binding: MainFragmentBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.main_fragment,
+            container,
+            false
+        )
+
+        // ?
+        binding.lifecycleOwner = viewLifecycleOwner
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = view.rootView.findViewById(R.id.recycler_view)
-        recyclerView.also {
+
+        binding.recyclerView.also {
             // RecyclerViewにレイアウトをセットする
             it.layoutManager = LinearLayoutManager(activity)
             // RecyclerViewにアダプタをセットする
@@ -33,7 +53,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
             this.context,
             DividerItemDecoration.VERTICAL
         )
-        recyclerView.addItemDecoration(itemDecoration)
+        binding.recyclerView.addItemDecoration(itemDecoration)
     }
 
     // RecyclerViewで表示するデータの作成
@@ -43,10 +63,4 @@ class MainFragment : Fragment(R.layout.main_fragment) {
             MainViewModel(it)
         }
     }
-
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-//        // TODO: Use the ViewModel
-//    }
 }
