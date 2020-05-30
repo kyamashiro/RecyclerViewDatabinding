@@ -56,6 +56,12 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         binding.recyclerView.addItemDecoration(itemDecoration)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        // メモリリーク対策
+        binding.unbind()
+    }
+
     // RecyclerViewで表示するデータの作成
     private fun initData(): List<MainViewModel> {
         val arr = Array(30) { i -> "This is element # $i" }
